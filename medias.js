@@ -27,6 +27,10 @@
 
      static mediaArmonica(values) {
 
+         throw {
+             name: 'NotImplemented',
+             message: 'Método no implementado'
+         }
          let media = 0;
          for (let index = 0; index < values.length; index++) {
              media += 1 / values[index];

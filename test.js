@@ -10,25 +10,59 @@ class Test {
 
     readFile() {
         let datos;
-        let parseFile = this.parseFile;
-        fs.readFile(this.path, 'utf8', function (err, result) {
+        fs.readFile(this.path, 'utf8', (err, result) => {
             datos = result.split('\r\n');
-            datos.forEach(function (element) {
-                parseFile(element);
+            datos.forEach((element) => {
+                this.parseFile(element);
             });
         });
     }
 
     parseFile(file) {
-        let process = file.split(':'); //Hasta aqui si jala
+        let process = file.split(':');
 
-        Test.pickNumbers(process);
+        this.pickNumbers(process);
     }
 
-    static pickNumbers(arr) {
+    pickNumbers(arr) {
+        let problem = arr[0];
+        let method = arr[1];
         let inputs = arr[2];
+        let output = arr[3];
+
         inputs = inputs.split(' ');
-        console.log(inputs.map(Number));
+        inputs = inputs.map(Number); //Hasta aqui si jala
+
+        //Try catch para que no falle el sistema
+        try {
+            if (medias[method]) { //Llamando a metodos de clase
+                // console.log(medias[method](inputs));
+
+                if (medias[method](inputs) == output) {
+                    console.log('Exito');
+                } else {
+                    console.log('Fracaso');
+
+                }
+
+            } else if (this.media[method]) { //Llamando a metodos de instancia
+                // console.log(this.media[method](inputs));
+
+                let m = this.media[method];
+                if (m == output) {
+                    console.log('Exito');
+                } else {
+                    console.log('Fracaso');
+
+                }
+            } else {
+                console.log('Método no existente');
+
+            }
+        } catch (e) {
+            console.log(e.message);
+
+        }
 
     }
 
