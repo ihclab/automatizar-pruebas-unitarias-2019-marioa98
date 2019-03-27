@@ -8,6 +8,7 @@ class Test {
         this.media = new medias();
     }
 
+    //Se lee todo el archivo en formato utf8 y lo separa por enters
     readFile() {
         let datos;
         fs.readFile(this.path, 'utf8', (err, result) => {
@@ -18,6 +19,7 @@ class Test {
         });
     }
 
+    //Divide cada una de las líneas en donde se encuentre el ':'
     parseFile(file) {
         let process = file.split(':');
 
@@ -39,26 +41,26 @@ class Test {
 
                 let m = medias[method](inputs);
 
-                if (m == output) {
-                    console.log('\x1b[32m', 'Result ' + problem + ': Success');
-                } else {
-                    console.log('\x1b[31m', 'Result ' + problem + ': Failed');
+                if (m == output) { //Color del texto: Verde
+                    console.log('\x1b[32m', 'Result ' + problem + ': Success ' + m + ' ' + output);
+                } else { //Color del texto: Rojo
+                    console.log('\x1b[31m', 'Result ' + problem + ': Failed ' + m + ' ' + output);
                 }
 
             } else if (this.media[method]) { //Llamando a metodos de instancia
 
                 let m = this.media[method](inputs);
-                if (m == output) {
-                    console.log('\x1b[32m', 'Result ' + problem + ': Success');
-                } else {
-                    console.log('\x1b[31m', 'Result ' + problem + ': Failed');
+                if (m == output) { //Color del texto: Verde                    
+                    console.log('\x1b[32m', 'Result ' + problem + ': Success ' + m + ' ' + output);
+                } else { //Color del texto: Rojo
+                    console.log('\x1b[31m', 'Result ' + problem + ': Failed ' + m + ' ' + output);
                 }
 
-            } else {
+            } else { //Color del texto: Rojo
                 console.log('\x1b[31m', 'Result ' + problem + ': This method does not exists, failed'); //Si no pasa ninguno de los dos, el método no existe
 
             }
-        } catch (e) {
+        } catch (e) { //Color del texto: Rojo
             console.log('\x1b[31m', 'Result ' + problem + ': ' + e.message + ', failed');
 
         }
@@ -67,7 +69,7 @@ class Test {
     }
 
     changeColor() {
-        console.log('\x1b[37m');
+        console.log('\x1b[37m'); //Color del texto: Blanco
     }
 
 }

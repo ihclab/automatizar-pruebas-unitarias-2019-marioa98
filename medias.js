@@ -2,8 +2,9 @@
 
      static mediaAritmetica(values) {
 
-         if (Number.isNaN(values)) {
-             return NaN;
+         if (values.filter(e => Number.isNaN(e)).length > 0) {
+             let zero = 0;
+             return zero.toFixed(4);
          } else {
              let media = 0;
 
@@ -17,22 +18,22 @@
      }
 
      static raizEnesima(x, n) {
-
-         if (Number.isNaN(x)) {
-             return NaN;
-         } else {
-             let pw = Math.pow(x, (1 / n));
-             return pw.toFixed(4);
-         }
+         let pw = Math.pow(x, (1 / n));
+         return pw.toFixed(4);
      }
 
      mediaGeometrica(values) {
 
-         let media = 1;
-         for (let index = 0; index < values.length; index++) {
-             media *= values[index];
+         if (values.filter(e => Number.isNaN(e)).length > 0) {
+             let zero = 0;
+             return zero.toFixed(4);
+         } else {
+             let media = 1;
+             for (let index = 0; index < values.length; index++) {
+                 media *= values[index];
+             }
+             return (Medias.raizEnesima(media, values.length));
          }
-         return (Medias.raizEnesima(media, values.length));
      }
 
      static mediaArmonica(values) {
