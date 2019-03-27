@@ -31,36 +31,35 @@ class Test {
         let output = arr[3];
 
         inputs = inputs.split(' ');
-        inputs = inputs.map(Number); //Hasta aqui si jala
+        inputs = inputs.map(Number); //Convierte a número los valores del array
 
         //Try catch para que no falle el sistema
         try {
             if (medias[method]) { //Llamando a metodos de clase
-                // console.log(medias[method](inputs));
 
-                if (medias[method](inputs) == output) {
-                    console.log('Exito');
+                let m = medias[method](inputs);
+
+                if (m == output) {
+                    console.log('Result ' + problem + ': Success');
                 } else {
-                    console.log('Fracaso');
-
+                    console.log('Result ' + problem + ': Failed');
                 }
 
             } else if (this.media[method]) { //Llamando a metodos de instancia
-                // console.log(this.media[method](inputs));
 
                 let m = this.media[method];
                 if (m == output) {
-                    console.log('Exito');
+                    console.log('Result ' + problem + ': Success');
                 } else {
-                    console.log('Fracaso');
-
+                    console.log('Result ' + problem + ': Failed');
                 }
+
             } else {
-                console.log('Método no existente');
+                console.log('Result ' + problem + ': This method does not exists, failed'); //Si no pasa ninguno de los dos, el método no existe
 
             }
         } catch (e) {
-            console.log(e.message);
+            console.log('Result ' + problem + ': ' + e.message + ', failed');
 
         }
 
