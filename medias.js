@@ -32,7 +32,7 @@
          for (let index = 0; index < values.length; index++) {
              media *= values[index];
          }
-         return (this.raizEnesima(media, values.length));
+         return (Medias.raizEnesima(media, values.length));
      }
 
      static mediaArmonica(values) {

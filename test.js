@@ -40,31 +40,37 @@ class Test {
                 let m = medias[method](inputs);
 
                 if (m == output) {
-                    console.log('Result ' + problem + ': Success');
+                    console.log('\x1b[32m', 'Result ' + problem + ': Success');
                 } else {
-                    console.log('Result ' + problem + ': Failed');
+                    console.log('\x1b[31m', 'Result ' + problem + ': Failed');
                 }
 
             } else if (this.media[method]) { //Llamando a metodos de instancia
 
-                let m = this.media[method];
+                let m = this.media[method](inputs);
                 if (m == output) {
-                    console.log('Result ' + problem + ': Success');
+                    console.log('\x1b[32m', 'Result ' + problem + ': Success');
                 } else {
-                    console.log('Result ' + problem + ': Failed');
+                    console.log('\x1b[31m', 'Result ' + problem + ': Failed');
                 }
 
             } else {
-                console.log('Result ' + problem + ': This method does not exists, failed'); //Si no pasa ninguno de los dos, el método no existe
+                console.log('\x1b[31m', 'Result ' + problem + ': This method does not exists, failed'); //Si no pasa ninguno de los dos, el método no existe
 
             }
         } catch (e) {
-            console.log('Result ' + problem + ': ' + e.message + ', failed');
+            console.log('\x1b[31m', 'Result ' + problem + ': ' + e.message + ', failed');
 
         }
 
+        this.changeColor();
+    }
+
+    changeColor() {
+        console.log('\x1b[37m');
     }
 
 }
+
 let testing = new Test('C:/Users/mario/OneDrive/Escritorio/automatizar-pruebas-unitarias-2019-marioa98/CasosPrueba.txt');
 testing.readFile();
