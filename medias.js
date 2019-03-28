@@ -2,6 +2,7 @@
 
      static mediaAritmetica(values) {
 
+         //Verifica si no hay valores NaN dentro del array
          if (values.filter(e => Number.isNaN(e)).length > 0) {
              let zero = 0;
              return zero.toFixed(4);
@@ -24,9 +25,10 @@
 
      mediaGeometrica(values) {
 
+         //Verifica si no hay valores NaN dentro del array
          if (values.filter(e => Number.isNaN(e)).length > 0) {
              let zero = 0;
-             return zero.toFixed(4);
+             return zero.toFixed(4); //Si hay NaN, devuelve 0.0000
          } else {
              let media = 1;
              for (let index = 0; index < values.length; index++) {
@@ -54,7 +56,3 @@
  }
 
  module.exports = Medias;
- // let values = [2, 4, 6, 12, 18];
- // console.log(mediaAritmetica(values));
- // console.log(mediaGeometrica(values));
- // console.log(mediaArmonica(values));
