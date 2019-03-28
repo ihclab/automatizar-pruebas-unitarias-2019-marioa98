@@ -22,10 +22,24 @@ class Test {
                 console.log('File not found');
 
             } else {
+
+                let success = 0;
+                let failed = 0;
+
                 datos = result.split('\r\n');
                 datos.forEach((element) => {
-                    this.parseFile(element);
+                    let value = this.parseFile(element);
+
+                    if (value == 1) {
+                        success++;
+                    } else {
+                        failed++;
+                    }
                 });
+
+                console.log('\n========= Fin de la prueba ==========\n');
+                console.log('Éxito = ' + success + '      Falla = ' + failed);
+
             }
         });
 
@@ -35,7 +49,7 @@ class Test {
     parseFile(file) {
         let process = file.split(':');
 
-        this.pickNumbers(process);
+        return this.pickNumbers(process);
     }
 
     pickNumbers(arr) {
@@ -50,6 +64,8 @@ class Test {
         let processStarts = performance.now();
         let processEnds;
 
+        let value = 1;
+
         //Try catch para que no falle el sistema
         try {
             if (medias[method]) { //Llamando a metodos de clase
@@ -61,6 +77,7 @@ class Test {
                     //Color del texto: Verde
                     console.log('\x1b[32m', problem + '    Éxito    ' + method + ' = ' + m + ' T.E: ' + (processEnds - processStarts).toFixed(3) + ' ms');
                 } else {
+                    value = 0;
                     processEnds = performance.now();
                     //Color del texto: Rojo
                     console.log('\x1b[31m', problem + '   *Falla*   ' + method + ' = ' + m + ' Esperado = ' + output + ' T.E: ' + (processEnds - processStarts).toFixed(3) + ' ms');
@@ -74,18 +91,21 @@ class Test {
                     //Color del texto: Verde                    
                     console.log('\x1b[32m', problem + '    Éxito    ' + method + ' = ' + m + ' T.E: ' + (processEnds - processStarts).toFixed(3) + ' ms');
                 } else {
+                    value = 0;
                     processEnds = performance.now();
                     //Color del texto: Rojo
                     console.log('\x1b[31m', problem + '   *Falla*   ' + method + ' = ' + m + ' Esperado = ' + output + ' T.E: ' + (processEnds - processStarts).toFixed(3) + ' ms');
                 }
 
             } else {
+                value = 0;
                 processEnds = performance.now();
                 //Color del texto: Rojo
                 console.log('\x1b[31m', problem + '             ' + method + ' Método no encontrado'); //Si no pasa ninguno de los dos, el método no existe
 
             }
         } catch (e) {
+            value = 0;
             processEnds = performance.now();
             //Color del texto: Rojo
             console.log('\x1b[31m', problem + '             ' + method + ' Método no implementado');
@@ -93,6 +113,8 @@ class Test {
         }
 
         this.changeColor();
+
+        return value;
     }
 
     changeColor() {
