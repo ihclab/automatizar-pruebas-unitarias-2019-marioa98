@@ -12,6 +12,9 @@ class Test {
     //Se lee todo el archivo en formato utf8 y lo separa por enters
     readFile() {
 
+        console.log(' ID   Resultado Método           Detalles');
+        console.log('==========================================================\n');
+
         let datos;
         fs.readFile(this.path, 'utf8', (err, result) => {
 
@@ -25,6 +28,7 @@ class Test {
                 });
             }
         });
+
     }
 
     //Divide cada una de las líneas en donde se encuentre el ':'
@@ -55,11 +59,11 @@ class Test {
                 if (m == output) {
                     processEnds = performance.now();
                     //Color del texto: Verde
-                    console.log('\x1b[32m', 'Result ' + problem + ': Success ' + m + ' ' + output + ' ' + (processEnds - processStarts).toFixed(3) + 'ms');
+                    console.log('\x1b[32m', problem + '    Éxito    ' + method + ' = ' + m + ' T.E: ' + (processEnds - processStarts).toFixed(3) + ' ms');
                 } else {
                     processEnds = performance.now();
                     //Color del texto: Rojo
-                    console.log('\x1b[31m', 'Result ' + problem + ': Failed ' + m + ' ' + output + ' ' + (processEnds - processStarts).toFixed(3) + 'ms');
+                    console.log('\x1b[31m', problem + '   *Falla*   ' + method + ' = ' + m + ' Esperado = ' + output + ' T.E: ' + (processEnds - processStarts).toFixed(3) + ' ms');
                 }
 
             } else if (this.media[method]) { //Llamando a metodos de instancia
@@ -68,23 +72,23 @@ class Test {
                 if (m == output) {
                     processEnds = performance.now();
                     //Color del texto: Verde                    
-                    console.log('\x1b[32m', 'Result ' + problem + ': Success ' + m + ' ' + output + ' ' + (processEnds - processStarts).toFixed(3) + 'ms');
+                    console.log('\x1b[32m', problem + '    Éxito    ' + method + ' = ' + m + ' T.E: ' + (processEnds - processStarts).toFixed(3) + ' ms');
                 } else {
                     processEnds = performance.now();
                     //Color del texto: Rojo
-                    console.log('\x1b[31m', 'Result ' + problem + ': Failed ' + m + ' ' + output + ' ' + (processEnds - processStarts).toFixed(3) + 'ms');
+                    console.log('\x1b[31m', problem + '   *Falla*   ' + method + ' = ' + m + ' Esperado = ' + output + ' T.E: ' + (processEnds - processStarts).toFixed(3) + ' ms');
                 }
 
             } else {
                 processEnds = performance.now();
                 //Color del texto: Rojo
-                console.log('\x1b[31m', 'Result ' + problem + ': This method does not exist, failed ' + (processEnds - processStarts).toFixed(3) + 'ms'); //Si no pasa ninguno de los dos, el método no existe
+                console.log('\x1b[31m', problem + '             ' + method + ' Método no encontrado'); //Si no pasa ninguno de los dos, el método no existe
 
             }
         } catch (e) {
             processEnds = performance.now();
             //Color del texto: Rojo
-            console.log('\x1b[31m', 'Result ' + problem + ': ' + e.message + ', failed ' + (processEnds - processStarts).toFixed(3) + 'ms');
+            console.log('\x1b[31m', problem + '             ' + method + ' Método no implementado');
 
         }
 
