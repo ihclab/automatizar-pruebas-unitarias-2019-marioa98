@@ -2,6 +2,12 @@ const fs = require('fs');
 const medias = require('./medias');
 const performance = require('perf_hooks').performance;
 
+let date = new Date();
+let fileName = 'Mario Armando Martínez Barajas ' + date.getDay() + '-' + date.getMonth() + '-' +
+    date.getFullYear() + '  ' + date.getHours() + '-' + date.getMinutes() + '-' + date.getSeconds() + '.txt';
+let file = fs.createWriteStream(fileName);
+let message;
+
 class Test {
 
     constructor(path) {
@@ -12,15 +18,20 @@ class Test {
     //Se lee todo el archivo en formato utf8 y lo separa por enters
     readFile() {
 
-        console.log(' ID   Resultado Método           Detalles');
-        console.log('==========================================================\n');
-
         let datos;
+
+        message = ' ID   Resultado Método           Detalles\n==========================================================\n';
+
+        console.log(message);
+        file.write(message);
+
         fs.readFile(this.path, 'utf8', (err, result) => {
 
             if (err) {
-                console.log('File not found');
+                message = 'File not found';
 
+                console.log(message);
+                file.write(message);
             } else {
 
                 let success = 0;
@@ -37,9 +48,9 @@ class Test {
                     }
                 });
 
-                console.log('\n========= Fin de la prueba ==========\n');
-                console.log('Éxito = ' + success + '      Falla = ' + failed);
-
+                message = '\n========= Fin de la prueba ==========\n' + '\nÉxito = ' + success + '      Falla = ' + failed
+                console.log(message);
+                file.write(message);
             }
         });
 
@@ -74,42 +85,52 @@ class Test {
 
                 if (m == output) {
                     processEnds = performance.now();
+                    message = problem + '    Éxito    ' + method + ' = ' + m + ' T.E: ' + (processEnds - processStarts).toFixed(3) + ' ms\n';
                     //Color del texto: Verde
-                    console.log('\x1b[32m', problem + '    Éxito    ' + method + ' = ' + m + ' T.E: ' + (processEnds - processStarts).toFixed(3) + ' ms');
+                    console.log('\x1b[32m', message);
+                    file.write(message);
                 } else {
                     value = 0;
                     processEnds = performance.now();
+                    message = problem + '   *Falla*   ' + method + ' = ' + m + ' Esperado = ' + output + ' T.E: ' + (processEnds - processStarts).toFixed(3) + ' ms\n'
                     //Color del texto: Rojo
-                    console.log('\x1b[31m', problem + '   *Falla*   ' + method + ' = ' + m + ' Esperado = ' + output + ' T.E: ' + (processEnds - processStarts).toFixed(3) + ' ms');
+                    console.log('\x1b[31m', message);
+                    file.write(message);
                 }
 
             } else if (this.media[method]) { //Llamando a metodos de instancia
 
                 let m = this.media[method](inputs);
                 if (m == output) {
+                    message = problem + '    Éxito    ' + method + ' = ' + m + ' T.E: ' + (processEnds - processStarts).toFixed(3) + ' ms\n';
                     processEnds = performance.now();
                     //Color del texto: Verde                    
-                    console.log('\x1b[32m', problem + '    Éxito    ' + method + ' = ' + m + ' T.E: ' + (processEnds - processStarts).toFixed(3) + ' ms');
+                    console.log('\x1b[32m', message);
+                    file.write(message);
                 } else {
                     value = 0;
                     processEnds = performance.now();
+                    message = problem + '   *Falla*   ' + method + ' = ' + m + ' Esperado = ' + output + ' T.E: ' + (processEnds - processStarts).toFixed(3) + ' ms\n'
                     //Color del texto: Rojo
-                    console.log('\x1b[31m', problem + '   *Falla*   ' + method + ' = ' + m + ' Esperado = ' + output + ' T.E: ' + (processEnds - processStarts).toFixed(3) + ' ms');
+                    console.log('\x1b[31m', message);
+                    file.write(message);
                 }
 
             } else {
                 value = 0;
                 processEnds = performance.now();
+                message = problem + '             ' + method + ' Método no encontrado\n';
                 //Color del texto: Rojo
-                console.log('\x1b[31m', problem + '             ' + method + ' Método no encontrado'); //Si no pasa ninguno de los dos, el método no existe
-
+                console.log('\x1b[31m', message); //Si no pasa ninguno de los dos, el método no existe
+                file.write(message);
             }
         } catch (e) {
             value = 0;
             processEnds = performance.now();
+            message = problem + '             ' + method + ' Método no implementado\n'
             //Color del texto: Rojo
-            console.log('\x1b[31m', problem + '             ' + method + ' Método no implementado');
-
+            console.log('\x1b[31m', message);
+            file.write(message);
         }
 
         this.changeColor();
